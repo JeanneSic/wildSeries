@@ -1,0 +1,19 @@
+$main-color: #4080bf;
+$second-color: #993333;
+$text-color: #595959;
+$other-color: #ffff;
+
+body {
+    background-color: $other-color;
+}
+
+nav {
+    background-color: $main-color;
+     a {
+       color: $other-color;
+         &:hover{
+           color: $text-color;
+         }
+     }
+
+}
