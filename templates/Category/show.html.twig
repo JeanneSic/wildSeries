@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% for programsByCategory in programsByCategory %}
+    Catégorie #{{ programsByCategory.category.name }}
+    {% endfor %}
+{% endblock %}
+
+{% block body %}
+    {% if programsByCategory is empty %}
+        <h1> Aucune série ne correspond à la catégorie {{ programsByCategory.category.name}} </h1>
+    {% endif %}
+    <div class="media">
+        {% for programsByCategory in programsByCategory %}
+            <div class="media-body">
+                <h1 class="mt-0"><a href="{{ path("program_show", {id: programsByCategory.id}) }}"> {{ programsByCategory.title }} </a> </h1>
+                <h2> Série #{{ programsByCategory.id }}</h2>
+                <p>{{ programsByCategory.summary }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{{ path('program_index') }}"> Retour à la liste des programmes</a>
+
+{% endblock %}
