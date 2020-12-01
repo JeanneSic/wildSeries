@@ -13,7 +13,6 @@
                 <p> Catégorie: {{ program.category.name }} </p>
             </div>
             <div class="media-body">
-                {{ dump(seasons) }}
                 {% for season in seasons %}
                     <p class="mt-0"> <a href="{{ path('program_season_show', {programId: program.id, seasonId: season.id}) }}">Saison {{ season.number }}</a></p>
                 {% endfor %}
