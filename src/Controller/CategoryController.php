@@ -8,6 +8,7 @@ use App\Entity\Program;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -39,10 +40,10 @@ class CategoryController extends AbstractController
     public function show(string $categoryName) {
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
-            -> findOneBy( ['name' => $categoryName]);
+            -> findOneBy(['name' => $categoryName]);
 
         if (!$category) {
-            throw $this->createNotFoundException("Error 404 - Aucune catégorie ne correspond à " . $categoryName);
+            throw new NotFoundHttpException("Aucune catégorie ne correspond à " . $categoryName);
         }
 
         $programsByCategory = $this->getDoctrine()
