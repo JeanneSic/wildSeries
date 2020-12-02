@@ -45,16 +45,6 @@ class Program
      */
     private $seasons;
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $country;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $year;
-
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
@@ -143,27 +133,5 @@ class Program
         return $this;
     }
 
-    public function getCountry(): ?int
-    {
-        return $this->country;
-    }
 
-    public function setCountry(int $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getYear(): ?int
-    {
-        return $this->year;
-    }
-
-    public function setYear(int $year): self
-    {
-        $this->year = $year;
-
-        return $this;
-    }
 }
