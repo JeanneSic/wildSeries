@@ -25,7 +25,7 @@ class Program
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Assert\Length(max="255")
+     * @Assert\Length(max="255",  maxMessage="Maximum 255 caractères")
      * @Assert\Regex(pattern="/plus belle la vie/", match=false, message="Nous n'acceptons que les vraies séries")
      */
     private $title;
