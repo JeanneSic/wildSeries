@@ -1,5 +1,7 @@
 # wildSeries
 
+Quête 17 - lien vidéo Loom: https://www.loom.com/share/67b9dfd4c0cd46188e6d2abe44c12bfa
+
 Quête 16 - lien vidéo Loom: https://www.loom.com/share/29bf4d012c4a480996f29dab742fcda3
 
 Quête 15 - lien vidéo Loom: https://www.loom.com/share/cb4e9bb04543470fbb09f5248a7d4f49
