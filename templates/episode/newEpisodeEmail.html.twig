@@ -1,0 +1,11 @@
+{% extends '_layoutEmail.html.twig' %}
+
+{% block title %}Nouvel épisode{% endblock %}
+
+{% block body %}
+
+    <h1>Nouvel épisode: "{{ episode.title }}" ajouté.</h1>
+    <p>Bonjour, un nouvel épisode "{{ episode.title }}" a été ajouté sur WildSeries à la série {{ episode.season.program.title }}</p>
+    <p>Description: {{episode.synopsis }}
+    <p> <a href="{{ path("episode_show", {episodeSlug: episode.slug}) }}">Voir la fiche de l'épisode</a> </p>
+{% endblock %}
