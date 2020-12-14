@@ -8,12 +8,10 @@ class Slugify
     {
         $input = trim($input);
         $inputWithoutAccent = $this->remove_accent($input);
-        $inputReplaced = preg_replace(['/[^a-zA-Z0-9]/', '/[\-]+/'],
-            ['', '-'], $input);
-        return mb_strtolower($inputReplaced, $inputWithoutAccent);
+        $inputReplaced = preg_replace(['/[^a-zA-Z0-9 -]/', '/[ \-]+/'],
+            ['', '-'], $inputWithoutAccent);
+        return mb_strtolower($inputReplaced);
     }
-
-
     public function remove_accent($input)
     {
         $withAccent = ['À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð',
