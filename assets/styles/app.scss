@@ -19,15 +19,19 @@ nav a{
   width: 20rem;
 }
 
-.div-season-show{
+.div-season-show {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.div-media-season-show{
+.div-media-season-show {
   display: flex;
   align-items: unset;
+}
 
+.program-container {
+  display: flex;
+  justify-content: space-around;
 }
 
 @import "~bootstrap/scss/bootstrap";

@@ -2,8 +2,7 @@
 
 namespace App\DataFixtures;
 
-use Faker;
-use App\Entity\Actor;
+use App\Service\Slugify;
 use App\Entity\Program;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -49,10 +48,13 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     {
         $i=0;
         foreach (self::PROGRAMS as $title => $info) {
+            $slug = new Slugify();
+            $slug = $slug->generate($title);
             $program = new Program();
             $program->setTitle($title);
             $program->setSummary($info['summary']);
             $program->setPoster($info['poster']);
+            $program->setSlug($slug);
             $program->setCategory($this->getReference($info['category']));
             $this->addReference('program_'.$i, $program);
             $manager->persist($program);

@@ -7,7 +7,7 @@
         <strong>Liste des acteurs</strong>
         <ul>
             {% for actor in actors %}
-                <li> <a href="{{ path('actor_show', {id:actor.id}) }}" > {{ actor.name }} </a></li>
+                <li> <a href="{{ path('actor_show', { actorSlug: actor.slug}) }}" > {{ actor.name }} </a></li>
             {% endfor %}
         </ul>
     </div>

@@ -10,15 +10,17 @@
     {% if programsByCategory is empty %}
         <h1> Aucune série ne correspond à la catégorie {{ programsByCategory.category.name}} </h1>
     {% endif %}
-    <div class="media">
-        {% for programsByCategory in programsByCategory %}
-            <div class="media-body">
-                <h1 class="mt-0"><a href="{{ path("program_show", {id: programsByCategory.id}) }}"> {{ programsByCategory.title }} </a> </h1>
-                <h2> Série #{{ programsByCategory.id }}</h2>
-                <p>{{ programsByCategory.summary }}</p>
+    <a href="{{ path('program_index') }}"> Retour à la liste des programmes</a>
+    <div class="container-fluid program-container">
+    {% for programsByCategory in programsByCategory %}
+            <div class="card col-3">
+                <img class="card-img-top" src="{{ programsByCategory.poster }}" alt="{{ programsByCategory.title }} poster">
+                <div class="card-body">
+                    <h5 class="card-title">{{ programsByCategory.title }} </h5>
+                    <p class="card-text">{{ programsByCategory.summary }}</p>
+                    <a href="{{ path("program_show", {programSlug: programsByCategory.slug}) }}" class="btn btn-primary">Découvrir</a>
+                </div>
             </div>
         {% endfor %}
     </div>
-    <a href="{{ path('program_index') }}"> Retour à la liste des programmes</a>
-
 {% endblock %}
