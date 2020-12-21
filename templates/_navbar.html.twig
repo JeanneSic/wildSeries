@@ -11,30 +11,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="/programs">Programmes</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Catégories
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/categories/">Toutes les catégories</a>
-                    <a class="dropdown-item" href="/categories/new">Ajouter une catégorie</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Séries
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/programs">Toutes les séries</a>
-                    <a class="dropdown-item" href="/programs/new">Ajouter une série</a>
-                    <a class="dropdown-item" href="/season/">Afficher toutes les saisons</a>
-                    <a class="dropdown-item" href="/episode/">Afficher tous les épisodes</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/actor">Liste des acteurs</a>
-                </div>
-            </li>
             <li class="nav-item">
                 {% if app.user %}
                     <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>

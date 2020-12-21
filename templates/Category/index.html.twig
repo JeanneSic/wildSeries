@@ -2,13 +2,24 @@
 
 {% block title %}All programs{% endblock %}
 {% block body %}
-    <h1>Toutes les séries de la table program: </h1>
+<div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('category_index') }}">Toutes les catégories</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('category_new') }}">Ajouter une catégorie</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_index') }}">Accueil</a>
+        </li>
+    </ul>
+</div>
+    <h1>Les catégories de programme: </h1>
     {% for category in categories %}
         <div>
             <h2>{{ loop.index }} / <a href="{{ path('category_show', {categoryName: category.name }) }}">{{ category.name }} </a> </h2>
     {% else %}
         Aucune Catégorie trouvée
     {% endfor %}
-
-    <a href="{{ path('app_index') }}">Retour à l'accueil</a>
 {% endblock %}

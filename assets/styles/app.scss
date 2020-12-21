@@ -7,30 +7,27 @@ $theme-colors: (
 
 $text-color: #595959;
 $other-color: #ffff;
+$font-secondary-title: 'Patua One', cursive;
+$font-title: 'Permanent Marker', cursive;
+$font-text: 'Fanwood Text', serif;
+
+body {
+  font-family: $font-text;
+}
+
+h1{
+  font-family: $font-title;
+}
+
+h5 {
+  font-family: $font-secondary-title;
+}
 
 nav a{
   color: $other-color;
-    &:hover{
-      color: $text-color;
-    }
-}
-
-.displayFlex{
-  display: flex;
-}
-
-.card-season-show {
-  width: 50%;
-}
-
-.season-comment {
-  width: 50%;
-}
-
-.commentsDisplay {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  &:hover{
+    color: $text-color;
+  }
 }
 
 .div-season-show {

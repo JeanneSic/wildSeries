@@ -2,16 +2,38 @@
 
 {% block title %}All programs{% endblock %}
 {% block body %}
-    <h1>Toutes les séries de la table program: </h1>
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('program_index') }}">Tous les programmes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('program_new') }}">Ajouter un programme</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_index') }}">Accueil</a>
+            </li>
+        </ul>
+    </div>
+    <h1 class="h1-programs-index" style="text-align: center;">Tous les programmes</h1>
+<div class="programs-container">
+    <div class="row justify-content-center">
     {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-            <p>{{ program.summary }}</p>
-            <a href="{{ path("program_show", {programSlug: program.slug}) }}">Voir la fiche</a>
-        </div>
+            <div class="card" style="width: 15rem; margin: 25px">
+                    <img class="card-img-top" src="{{ program.poster }}" alt="Card image cap">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ loop.index }}# {{ program.title }}</h5>
+                        <p class="card-text">Catégorie: {{ program.category.name }}</p>
+                        <p class="card-text">{{ program.summary }}</p>
+                        <a href="#" class="btn btn-primary mt-auto">Voir la fiche</a>
+                    </div>
+            </div>
     {% else %}
         Aucune Série trouvée
     {% endfor %}
+    </div>
+</div>
 
-    <a href="{{ path('app_index') }}">Retour à l'accueil</a>
+
+
 {% endblock %}
