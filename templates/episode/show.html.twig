@@ -22,6 +22,20 @@
         </tbody>
     </table>
     <div>
+        {% if app.user %}
+            <div style="margin-bottom: 5px" >
+                <p> {{ comments|length }} commentaires </p>
+                {% for comment in comments %}
+                    <p> Par {{ comment.author }}</p>
+                    <p> {{ comment.comment}}</p>
+                {% else %}
+                    <p> Il n'y a pas encore de commentaire sur cet épisode. Soyer le premier à en publier !</p>
+                {% endfor %}
+                <p>Ajouter un commentaire</p>
+                {{ form(form) }}
+                <button class="btn">{{ button_label|default('Valider mon commentaire') }}</button>
+            </div>
+        {% endif %}
         <div style="margin-bottom: 5px" >
             <a href="{{ path('episode_edit', {'episodeSlug': episode.slug}) }}">Modifier</a>
         </div>

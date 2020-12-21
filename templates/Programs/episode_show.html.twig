@@ -3,7 +3,7 @@
 {% block title %} S{{ season.id }} - {{ program.title }} {% endblock %}
 
 {% block body %}
-
+    <a href="{{ path('program_index') }}"> Retour à la liste des programmes</a>
     <div class="media">
         <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
         <div>
@@ -19,6 +19,35 @@
             </div>
         </div>
     </div>
-    <a href="{{ path('program_index') }}"> Retour à la liste des programmes</a>
+    {% if app.user %}
+    <h1 style="text-align: center">Commentaire</h1>
+    <div class="container">
 
+        <div class=" season-comment" style="margin-bottom: 20px">
+            {{ form_start(formComment) }}
+            {{ form_row(formComment.comment, { 'label': 'Commentaire' }) }}
+            {{ form_row(formComment.rate, { 'label': 'Note' }) }}
+            {{ form_help(formComment.rate, { 'help': 'Note comprise entre 0 et 10. 0 = médiocre; 10 = fabuleux' }) }}
+            <input type="submit" value="Publier mon commentaire">
+            {{ form_end(formComment) }}
+        </div>
+        <h3 style="text-align: center"> Les commentaires des Wilders </h3>
+            <div class="commentsDisplay" style=" display: flex; flex-direction: column; align-items: center;">
+                {% for comment in episode.comments %}
+                <div class="card w-50" style="margin-bottom: 10px;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ comment.author.email }}</h5>
+                        <p class="card-text">Commentaire: {{ comment.comment }}</p>
+                        <p class="card-text">Note: {{ comment.rate }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+    </div>
+    {% else %}
+    <div class="container">
+        <h1 style="text-align: center">Commentaire</h1>
+        <p style="text-align: center"> Pour laisser un commentaire sur cet épisode, <a href="{{ path('app_login') }}"> connectez-vous! </a> </p>
+    </div>
+    {% endif %}
 {% endblock %}

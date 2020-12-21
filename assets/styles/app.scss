@@ -15,8 +15,22 @@ nav a{
     }
 }
 
+.displayFlex{
+  display: flex;
+}
+
 .card-season-show {
-  width: 20rem;
+  width: 50%;
+}
+
+.season-comment {
+  width: 50%;
+}
+
+.commentsDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .div-season-show {
@@ -24,6 +38,7 @@ nav a{
   flex-direction: column;
   justify-content: space-between;
 }
+
 .div-media-season-show {
   display: flex;
   align-items: unset;

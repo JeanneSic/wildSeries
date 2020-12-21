@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Episode;
+use App\Entity\User;
 use App\Form\EpisodeType;
 use App\Repository\EpisodeRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\CommentType;
 
 /**
  * @Route("/episode")
@@ -54,15 +58,44 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{episodeSlug}", name="episode_show", methods={"GET"})
+     * @Route("/{episodeSlug}", name="episode_show", methods={"GET", "POST"})
+     * @IsGranted("ROLE_CONTRIBUTOR")
      * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episodeSlug": "slug"}})
      * @param Episode $episode
+     * @param Request $request
      * @return Response
      */
-    public function show(Episode $episode): Response
+    public function show(Episode $episode, Request $request): Response
     {
+        $episode = new Episode();
+        $comments = $this->getDoctrine()->getRepository(Comment::class)
+            ->findBy(['episode' => $episode]);
+
+        $this->denyAccessUnlessGranted("IS_AUTHENTICATED_FULLY");
+
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+//        $user = $this->getUser();
+//        $comment->setAuthor($user->getUserName());
+
+        var_dump($comment);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+//            $user = new User();
+//            $user = $user->getUsername();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            //$entityManager->flush();
+
+            //return new Response('Well Hi !' . $user->getUsername());
+        }
+
         return $this->render('episode/show.html.twig', [
+            'form' => $form->createView(),
             'episode' => $episode,
+            'comments' => $comments
         ]);
     }
 
