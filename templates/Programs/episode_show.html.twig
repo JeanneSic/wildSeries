@@ -3,51 +3,77 @@
 {% block title %} S{{ season.id }} - {{ program.title }} {% endblock %}
 
 {% block body %}
-    <a href="{{ path('program_index') }}"> Retour à la liste des programmes</a>
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('program_show', {programSlug: program.slug}) }}">{{ program.title }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('program_index') }}">Tous les programmes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_index') }}">Accueil</a>
+            </li>
+        </ul>
+    </div>
+
     <div class="media">
         <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
         <div>
-            <div class="media-body">
-                <h1 class="mt-0">{{ program.title }} - Saison {{ season.number }}</h1>
-                <p> {{ season.description}} </p>
-                <div class="card card-season-show">
-                    <div class="card-body">
-                        <h4>Episode {{ episode.number}}  - {{ episode.title }}</h4>
-                            <p class="card-title"> {{ episode.synopsis }}</p>
+            <div class="container">
+                <div class="media-body">
+                    <h1 class="mt-0">{{ program.title }} - Saison {{ season.number }}</h1>
+                    <p> {{ season.description}} </p>
+                    <div class="card card-season-show">
+                        <div class="card-body">
+                            <h4>Episode {{ episode.number}}  - {{ episode.title }}</h4>
+                                <p class="card-title"> {{ episode.synopsis }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {% if app.user %}
-    <h1 style="text-align: center">Commentaire</h1>
-    <div class="container">
-
-        <div class=" season-comment" style="margin-bottom: 20px">
-            {{ form_start(formComment) }}
-            {{ form_row(formComment.comment, { 'label': 'Commentaire' }) }}
-            {{ form_row(formComment.rate, { 'label': 'Note' }) }}
-            {{ form_help(formComment.rate, { 'help': 'Note comprise entre 0 et 10. 0 = médiocre; 10 = fabuleux' }) }}
-            <input type="submit" value="Publier mon commentaire">
-            {{ form_end(formComment) }}
-        </div>
         <h3 style="text-align: center"> Les commentaires des Wilders </h3>
             <div class="commentsDisplay" style=" display: flex; flex-direction: column; align-items: center;">
                 {% for comment in episode.comments %}
                 <div class="card w-50" style="margin-bottom: 10px;">
                     <div class="card-body">
                         <h5 class="card-title">{{ comment.author.email }}</h5>
-                        <p class="card-text">Commentaire: {{ comment.comment }}</p>
-                        <p class="card-text">Note: {{ comment.rate }}</p>
+                        <p class="card-text">{{ comment.rate }}/10</p>
+                        <p class="card-text">{{ comment.comment }}</p>
+
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a class="btn btn-primary" href="{{ path('comment_edit', {'id': comment.id} ) }}" role="button">Modifier</a>
+                            {{ include('comment/_delete_form.html.twig') }}
+                        {%elseif app.user == comment.author %}
+                            <a class="btn btn-primary" href="{{ path('comment_edit', {'id': comment.id} ) }}" role="button">Modifier</a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
+                {% if episode.comments is empty %}
+                <p>Soyez le premier à laisser un commentaire! </p>
+                {% endif %}
             </div>
-    </div>
+    {% if app.user %}
+        <h1 style="text-align: center">Commentaires</h1>
+        <div class="container">
+
+        <div class=" season-comment" style="margin-bottom: 20px">
+            {{ form_start(formComment, {'attr': {'class': 'formComment'}}) }}
+            {{ form_row(formComment.comment, { 'label': 'Commentaire' }) }}
+            {{ form_row(formComment.rate, { 'label': 'Note' }) }}
+            {{ form_help(formComment.rate, { 'help': 'Note comprise entre 0 et 10. 0 = médiocre; 10 = fabuleux' }) }}
+            <button class="btn btn-primary" style="align-self: center">{{ button_label|default('Publier') }}</button>
+            {{ form_end(formComment) }}
+        </div>
     {% else %}
-    <div class="container">
-        <h1 style="text-align: center">Commentaire</h1>
-        <p style="text-align: center"> Pour laisser un commentaire sur cet épisode, <a href="{{ path('app_login') }}"> connectez-vous! </a> </p>
-    </div>
+        <div class="container">
+            <h1 style="text-align: center">Commentaires</h1>
+            <p style="text-align: center"> Pour laisser un commentaire sur cet épisode, <a href="{{ path('app_login') }}"> connectez-vous! </a> </p>
+        </div>
     {% endif %}
+    </div>
+
 {% endblock %}

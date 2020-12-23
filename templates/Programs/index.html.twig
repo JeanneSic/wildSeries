@@ -25,7 +25,7 @@
                         <h5 class="card-title">{{ loop.index }}# {{ program.title }}</h5>
                         <p class="card-text">Catégorie: {{ program.category.name }}</p>
                         <p class="card-text">{{ program.summary }}</p>
-                        <a href="#" class="btn btn-primary mt-auto">Voir la fiche</a>
+                        <a href="{{ path('program_show', {programSlug: program.slug}) }}" class="btn btn-primary mt-auto">Voir la fiche</a>
                     </div>
             </div>
     {% else %}

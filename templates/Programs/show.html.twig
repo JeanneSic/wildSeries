@@ -1,39 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Série #{{ program.id }} {% endblock %}
+{% block title %} {{ program.slug}} {% endblock %}
 
 {% block body %}
-
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('program_show', {programSlug: program.slug}) }}">{{ program.title }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('program_index') }}">Tous les programmes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_index') }}">Accueil</a>
+            </li>
+        </ul>
+    </div>
     <div class="media">
         <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
         <div>
-            <div class="media-body">
-                <h1 class="mt-0">{{ program.title }}</h1>
-                <p>{{ program.summary }}</p>
-                <p> Catégorie: {{ program.category.name }} </p>
-            </div>
-            <div class="media-body">
-                {% for season in seasons %}
-                    <p class="mt-0"> <a href="{{ path('program_season_show', {programSlug: program.slug, seasonId: season.id}) }}">Saison {{ season.number }}</a></p>
-                {% endfor %}
-            </div>
-            <div class="media-body">
-                <strong>Acteurs :</strong>
-                <ul>
-                    {% for actor in program.actors %}
-                        <li><a href="{{ path('actor_show', { actorSlug: actor.slug }) }}">{{ actor.name }} </a> </li>
-                    {% else %}
-                        <li>Aucun acteur pour cette série</li>
+            <div class="container">
+                <div class="media-body">
+
+                    <h1 class="mt-0" style="text-align: center; font-size: 50px">{{ program.title }}</h1>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <a class="btn btn-primary" href="{{ path('program_edit', { 'programSlug': program.slug} ) }}" role="button">Editer</a>
+                    {%endif%}
+                    <p style="text-align: center"> Catégorie: {{ program.category.name }} </p>
+                    <p>{{ program.summary }}</p>
+                </div>
+                <div class="media-body">
+                    <h1> Les saisons</h1>
+                    {% for season in seasons %}
+                        <p class="mt-0"> <a href="{{ path('program_season_show', {programSlug: program.slug, seasonId: season.id}) }}">Saison {{ season.number }}</a></p>
                     {% endfor %}
-                </ul>
+                </div>
+                <div class="media-body">
+                    <h1>Les acteurs :</h1>
+                    <ul>
+                        {% for actor in program.actors %}
+                            <li><a href="{{ path('actor_show', { actorSlug: actor.slug }) }}">{{ actor.name }} </a> </li>
+                        {% else %}
+                            <li>Aucun acteur pour cette série</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-
-
-
-
-
-<a href="{{ path('program_index') }}"> Retour à la liste des programmes</a>
 
 {% endblock %}

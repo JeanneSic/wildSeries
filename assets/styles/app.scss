@@ -46,4 +46,9 @@ nav a{
   justify-content: space-around;
 }
 
+.formComment {
+  display: flex;
+  flex-direction: column;
+}
+
 @import "~bootstrap/scss/bootstrap";

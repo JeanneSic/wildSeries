@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon commentaire{% endblock %}
+
+{% block body %}
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('program_index') }}">Tous les programmes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_index') }}">Accueil</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+    <h1>Modifier mon commentaire</h1>
+
+    {{ include('comment/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+        {{ include('comment/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
