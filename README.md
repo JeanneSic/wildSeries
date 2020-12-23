@@ -1,6 +1,6 @@
 # wildSeries
 
-Quête 20 - lien vidéo Loom: https://www.loom.com/share/adaeaed67162450ea4900421703adbc1
+Quête 20 - lien vidéo Loom: https://www.loom.com/share/a0cc26513e1b465f9aacc181ef8613da
 
 Quête 19 - lien vidéo Loom: https://www.loom.com/share/105b218491c444338974b979b0f5f484
 
