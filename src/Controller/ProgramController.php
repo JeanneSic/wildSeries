@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 /**
  * @Route("/programs", name = "program_")
  */
@@ -25,14 +25,20 @@ class ProgramController extends AbstractController
      * @Route("/", name="index")
      * @return Response A response instance
      */
-    public function index(): Response
+    public function index(SessionInterface $session): Response
     {
         $programs = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findAll();
 
+        if (!$session->has('total')) {
+            $session->set('total', 0);
+        }
+
+        $total = $session->get('total');
+
         return $this->render('programs/index.html.twig', [
-            'programs' => $programs,
+            'programs' => $programs, 'total' => $total
         ]);
     }
 
@@ -56,6 +62,11 @@ class ProgramController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($program);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le nouveau programme a bien été crée'
+            );
 
             return $this->redirectToRoute('program_index');
         }
@@ -164,6 +175,10 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash(
+                'warning',
+                'Le programme a bien été modifié'
+            );
             return $this->redirectToRoute('program_index');
         }
 
@@ -172,7 +187,4 @@ class ProgramController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-
-
 }

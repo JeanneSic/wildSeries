@@ -15,8 +15,15 @@
     <header>
         {% include "_navbar.html.twig"%}
     </header>
+    {% for category, messages in app.flashes(['success', 'warning', 'danger']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ category }}" style="margin-bottom: unset">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
         {% block body %}{% endblock %}
-        {% block javascripts %}
+    {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </body>

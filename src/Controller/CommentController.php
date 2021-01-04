@@ -36,6 +36,10 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash(
+                'warning',
+                'Le commentaire a bien été modifié'
+            );
             return $this->redirectToRoute('program_index');
         }
 
@@ -62,6 +66,11 @@ class CommentController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($comment);
             $entityManager->flush();
+
+            $this->addFlash(
+                'danger',
+                'Le commentaire a bien été supprimé'
+            );
         }
 
         return $this->redirectToRoute('program_index');
