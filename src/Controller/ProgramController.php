@@ -9,6 +9,7 @@ use App\Entity\Season;
 use App\Form\CommentType;
 use App\Form\ProgramType;
 use App\Service\Slugify;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,14 +32,8 @@ class ProgramController extends AbstractController
             ->getRepository(Program::class)
             ->findAll();
 
-        if (!$session->has('total')) {
-            $session->set('total', 0);
-        }
-
-        $total = $session->get('total');
-
         return $this->render('programs/index.html.twig', [
-            'programs' => $programs, 'total' => $total
+            'programs' => $programs
         ]);
     }
 
@@ -186,5 +181,30 @@ class ProgramController extends AbstractController
             'program' => $program,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{programSlug}/watchlist", name="watchlist", methods={"GET", "POST"})
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"programSlug": "slug"}})
+     * @param Request $request
+     * @param Program $program
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function addToWatchlist(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->getUser()->getPrograms()->contains($program)) {
+            $this->getUser()->removeProgram($program);
+            $this->addFlash('danger','Le programme a été supprimé de la Wishlist');
+        }
+        else {
+            $this->getUser()->addProgram($program);
+            $this->addFlash('success','Le programme a bien été ajouté à la wishlist');
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            'isInWatchlist' => $this->getUser()->IsinWatchlist($program)]);
     }
 }

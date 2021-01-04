@@ -16,15 +16,22 @@
             </li>
         </ul>
     </div>
+
     <div class="media">
         <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
         <div>
             <div class="container">
                 <div class="media-body">
-
+                    <div class="container" style="display: flex; flex-direction: row; justify-content: center;">
+                    {% if app.user %}
+                        <div>
+                            <i id="watchlist" class="{{ app.user.isInWatchlist(program) ? 'fas' : 'far' }} fa-heart watchlist" data-href=”{{path('program_watchlist', {'programSlug': program.slug})}}” style="margin: 25px"></i>
+                        </div>
+                    {% endif %}
                     <h1 class="mt-0" style="text-align: center; font-size: 50px">{{ program.title }}</h1>
+                    </div>
                     {% if is_granted("ROLE_ADMIN") %}
-                        <a class="btn btn-primary" href="{{ path('program_edit', { 'programSlug': program.slug} ) }}" role="button">Editer</a>
+                        <a  class="btn btn-primary" href="{{ path('program_edit', { 'programSlug': program.slug} ) }}" role="button">Editer</>
                     {%endif%}
                     <p style="text-align: center"> Catégorie: {{ program.category.name }} </p>
                     <p>{{ program.summary }}</p>
@@ -49,4 +56,8 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('watchlist') }}
 {% endblock %}
